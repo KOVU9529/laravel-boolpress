@@ -23,6 +23,7 @@ Route::middleware('auth')
 ->prefix('admin')
 ->group(function(){
     Route::get('/','Homecontroller@index')-> name('home');
+    Route::resource('posts','PostController');
 });
 
 Route::get('{any?}', function () {
