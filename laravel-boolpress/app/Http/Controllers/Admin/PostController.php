@@ -132,7 +132,10 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post_delete = Post::findOrFail ($id);
+        $post_delete -> delete();
+        return redirect()-> route('admin.posts.index');
+       
     }
     protected function getFreeSlugFromTitle($title ){
         //Assegno una possibilità di salvataggio se non è già esistente
