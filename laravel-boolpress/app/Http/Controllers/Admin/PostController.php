@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
 use Illuminate\Support\ Str;
+//aggiunta Carbon
+use Carbon\Carbon;
 
 class PostController extends Controller
 {
@@ -66,7 +68,12 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post= Post::find($id);
+        //aggiunta Carbon
+        $now = Carbon::now($id);
+        //controllo Carbon
+        //dd($now);
+
+        $post= Post::findOrFail($id);
 
         $data=[
             'post'=>$post
@@ -83,7 +90,13 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post= Post::findOrFail($id);
+
+        $data=[
+            'post'=>$post
+        ];
+        
+        return view(' admin.posts.edit',$data);
     }
 
     /**
@@ -95,7 +108,20 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'content' => 'required|max:60000',
+        ]);
+        $form_data = $request->all();
+        $update_post = Post::findOrFail($id);
+        if($form_data['title'] !=   $update_post->title ){
+            $form_data['slug'] = $this->getFreeSlugFromTitle( $form_data['title']);
+        }else{
+            $form_data['slug'] = $update_post->slug;
+        }
+        $update_post ->update($form_data);
+
+        return redirect()->route('admin.posts.show',['post'=> $update_post->id]);
     }
 
     /**
