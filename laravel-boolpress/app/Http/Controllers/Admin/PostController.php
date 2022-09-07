@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
+use App\Category;
 use Illuminate\Support\ Str;
 //aggiunta Carbon
 use Carbon\Carbon;
@@ -34,7 +35,11 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view(' admin.posts.create');
+        $categories=Category::all();
+        $data=[
+            'categories'=>$categories
+        ];
+        return view(' admin.posts.create',$data);
     }
 
     /**
@@ -73,8 +78,7 @@ class PostController extends Controller
         //controllo Carbon
         //dd($now);
 
-        $post= Post::findOrFail($id);
-
+        $post = Post::findOrFail($id);
         $data=[
             'post'=>$post
         ];
