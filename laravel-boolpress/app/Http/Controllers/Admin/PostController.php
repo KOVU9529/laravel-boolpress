@@ -35,6 +35,7 @@ class PostController extends Controller
      */
     public function create()
     {
+        
         $categories=Category::all();
         $data=[
             'categories'=>$categories
@@ -50,12 +51,10 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'title' => 'required|max:255',
-            'content' => 'required|max:60000',
-        ]);
+       $request->validate($this->getValidation());
 
        $form_data = $request->all();
+     
        $new_post = new Post();
        $new_post->fill( $form_data);
        
@@ -77,10 +76,12 @@ class PostController extends Controller
         $now = Carbon::now($id);
         //controllo Carbon
         //dd($now);
-
+        
         $post = Post::findOrFail($id);
+     
         $data=[
-            'post'=>$post
+            'post'=>$post,
+            
         ];
         
         return view(' admin.posts.show', $data);
@@ -94,13 +95,15 @@ class PostController extends Controller
      */
     public function edit($id)
     {
+        
         $post= Post::findOrFail($id);
-
+        $categories=Category::all();
         $data=[
-            'post'=>$post
+            'post'=>$post,
+            'categories'=>$categories
         ];
         
-        return view(' admin.posts.edit',$data);
+        return view(' admin.posts.edit', $data);
     }
 
     /**
@@ -112,10 +115,7 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validatedData = $request->validate([
-            'title' => 'required|max:255',
-            'content' => 'required|max:60000',
-        ]);
+        $request->validate($this->getValidation());
         $form_data = $request->all();
         $update_post = Post::findOrFail($id);
         if($form_data['title'] !=   $update_post->title ){
@@ -158,5 +158,12 @@ class PostController extends Controller
        $counter++;
        }
        return  $slug_to_save;
+    }
+    public function getValidation(){
+        return[
+            'title' => 'required|max:255',
+            'content' => 'required|max:60000',
+            'category_id' => 'nullable|exists:categories,id'
+        ];
     }
 }
