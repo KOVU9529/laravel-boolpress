@@ -38,11 +38,12 @@
         value="{{$tag->id}}" 
         id="tag-{{$tag->id}}" 
         name="tags[]"
-        {{--Come prendo quelli che gia ci sono
-          -Se la collection
-          -contiene il tag
-          -visualizzazione selezionata
-          -altrimenti niente--}}
+        {{--Esperienza utente: 
+          -Si utilizza la funzione in_array 
+          -L'utilizzo è dovuto alla presenza di $tag->id
+          -Presenza analizzata nell'array old('tags',[])
+          -In funzione della presenza: le seguenti scelte
+          PS.ATTENTO ALLE PARENTESI--}}
           {{in_array($tag->id, old('tags',[])) ? 'checked' : ''}}>
         >
         <label class="form-check-label" for="tag-{{$tag->id}}"> 
