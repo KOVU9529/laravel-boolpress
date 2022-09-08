@@ -30,7 +30,45 @@
           @endforeach
         </select>
       </div>
-      <div class="form-group">
+      @foreach ($tags as $tag)
+      @if ($errors->any())
+      <div class="form-check">
+        <input class="form-check-input" 
+        type="checkbox" 
+        value="{{$tag->id}}" 
+        id="tag-{{$tag->id}}" 
+        name="tags[]"
+        {{--Come prendo quelli che gia ci sono
+          -Se la collection
+          -contiene il tag
+          -visualizzazione selezionata
+          -altrimenti niente--}}
+          {{in_array($tag->id, old('tags',[])) ? 'checked' : ''}}>
+        >
+        <label class="form-check-label" for="tag-{{$tag->id}}"> 
+         {{$tag->name}}
+        </label>
+      </div>
+        @else
+      <div class="form-check">
+         <input class="form-check-input" 
+         type="checkbox" 
+         value="{{$tag->id}}" 
+         id="tag-{{$tag->id}}" 
+         name="tags[]"
+         {{--Come prendo quelli che gia ci sono
+          -Se la collection
+          -contiene il tag
+          -visualizzazione selezionata
+          -altrimenti niente--}}
+          {{$post->tags->contains($tag) ? 'checked' :''}}>
+          <label class="form-check-label" for="tag-{{$tag->id}}"> 
+         {{$tag->name}}
+        </label>
+      </div>
+        @endif
+        @endforeach
+      <div class="form-group mt-3">
         <label for="content">Contenuto del post</label>
         <textarea class="form-control" id="content" name="content" rows="10" >{{old('content',$post->content)}}</textarea>
       </div>

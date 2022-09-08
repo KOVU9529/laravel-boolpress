@@ -37,7 +37,6 @@ class PostController extends Controller
      */
     public function create()
     {
-        
         $categories=Category::all();
         $tags=Tag::all();
         $data=[
@@ -68,9 +67,9 @@ class PostController extends Controller
        $new_post->save();
        //IMPORTANTE una volta salvata il nuovo post 
        //devo attacare tags, questo solo se tags esiste
-       //if(isset($form_data['tags'])){
+       if(isset($form_data['tags'])){
         $new_post->tags()->sync($form_data['tags']);
-       //}
+       }
        
 
        return redirect()->route('admin.posts.show',['post'=>$new_post->id]);
@@ -111,9 +110,11 @@ class PostController extends Controller
         
         $post= Post::findOrFail($id);
         $categories=Category::all();
+        $tags=Tag::all();
         $data=[
             'post'=>$post,
-            'categories'=>$categories
+            'categories'=>$categories,
+            'tags'=>$tags
         ];
         
         return view(' admin.posts.edit', $data);
@@ -137,7 +138,15 @@ class PostController extends Controller
             $form_data['slug'] = $update_post->slug;
         }
         $update_post ->update($form_data);
-
+        
+        //IMPORTANTE una volta salvata il nuovo post 
+       //devo attacare tags, questo solo se tags esiste
+       if(isset($form_data['tags'])){
+        $update_post->tags()->sync($form_data['tags']);
+       }else{
+        $update_post->tags()->sync([]);
+       }
+       
         return redirect()->route('admin.posts.show',['post'=> $update_post->id]);
     }
 
