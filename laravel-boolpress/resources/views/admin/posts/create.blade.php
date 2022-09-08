@@ -28,7 +28,29 @@
           @endforeach
         </select>
       </div>
-      <div class="form-group">
+     
+        @foreach ($tags as $tag)
+        <div class="form-check">
+        <input class="form-check-input" 
+        type="checkbox" 
+        value="{{$tag->id}}" 
+        id="tag-{{$tag->id}}" 
+        name="tags[]"
+        {{--Esperienza utente: 
+          -Si utilizza la funzione in_array 
+          -L'utilizzo è dovuto alla presenza di $tag->id
+          -Presenza analizzata nell'array old('tags',[])
+          -In funzione della presenza: le seguenti scelte
+          PS.ATTENTO ALLE PARENTESI--}}
+        {{in_array($tag->id, old('tags',[])) ? 'checked' : ''}}>
+        <label class="form-check-label" for="tag-{{$tag->id}}"> 
+         {{$tag->name}}
+        </label>
+        </div>
+        @endforeach
+       
+      
+      <div class="form-group mt-3">
         <label for="content">Contenuto del post</label>
         <textarea class="form-control" id="content" name="content" rows="10" >{{old('content')}}</textarea>
       </div>

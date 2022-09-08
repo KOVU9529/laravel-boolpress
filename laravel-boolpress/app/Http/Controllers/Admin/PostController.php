@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
+use App\Tag;
+
 use App\Category;
 use Illuminate\Support\ Str;
 //aggiunta Carbon
@@ -37,8 +39,11 @@ class PostController extends Controller
     {
         
         $categories=Category::all();
+        $tags=Tag::all();
         $data=[
-            'categories'=>$categories
+            'categories'=>$categories,
+            'tags'=>$tags
+
         ];
         return view(' admin.posts.create',$data);
     }
@@ -54,12 +59,19 @@ class PostController extends Controller
        $request->validate($this->getValidation());
 
        $form_data = $request->all();
+       
      
        $new_post = new Post();
        $new_post->fill( $form_data);
        
        $new_post->slug = $this->getFreeSlugFromTitle($new_post->title);
        $new_post->save();
+       //IMPORTANTE una volta salvata il nuovo post 
+       //devo attacare tags, questo solo se tags esiste
+       //if(isset($form_data['tags'])){
+        $new_post->tags()->sync($form_data['tags']);
+       //}
+       
 
        return redirect()->route('admin.posts.show',['post'=>$new_post->id]);
     }
@@ -78,10 +90,11 @@ class PostController extends Controller
         //dd($now);
         
         $post = Post::findOrFail($id);
+        $tags=Tag::all();
      
         $data=[
             'post'=>$post,
-            
+            'tags'=>$tags
         ];
         
         return view(' admin.posts.show', $data);
