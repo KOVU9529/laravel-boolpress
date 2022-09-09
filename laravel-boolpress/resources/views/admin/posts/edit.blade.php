@@ -30,6 +30,7 @@
           @endforeach
         </select>
       </div>
+      <h3>Tags:</h3>
       @foreach ($tags as $tag)
       @if ($errors->any())
       <div class="form-check">

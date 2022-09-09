@@ -28,7 +28,7 @@
           @endforeach
         </select>
       </div>
-     
+      <h3>Tags:</h3>
         @foreach ($tags as $tag)
         <div class="form-check">
         <input class="form-check-input" 
