@@ -22,8 +22,14 @@ Route::middleware('auth')
 ->name('admin.')
 ->prefix('admin')
 ->group(function(){
+    //route per gestire la home dell'admin
     Route::get('/','Homecontroller@index')-> name('home');
+    //routes per gestire le crud posts
     Route::resource('posts','PostController');
+    //routes per gestire le crud categories 
+    Route::resource('categories','CategoryController');
+
+    
 });
 
 Route::get('{any?}', function () {

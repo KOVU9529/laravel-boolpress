@@ -54,7 +54,7 @@
         <label for="content">Contenuto del post</label>
         <textarea class="form-control" id="content" name="content" rows="10" >{{old('content')}}</textarea>
       </div>
-      <input type="submit" value="Salva post">
+      <input type="submit" value="Crea post">
   </form>
     
 @endsection
