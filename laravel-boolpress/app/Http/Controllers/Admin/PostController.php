@@ -188,7 +188,7 @@ class PostController extends Controller
             'content' => 'required|max:60000',
             'category_id' => 'nullable|exists:categories,id',
             'tags' => 'nullable|exists:tags,id',
-            'name' => 'required|stringer'
+            
 
         ];
     }
