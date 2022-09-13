@@ -20,15 +20,15 @@
                 <ul class="pagination mt-3">
                     <!--previus button-->
                     <li class="page-item" :class="{'disabled' : currentPage == 1}">
-                      <a class="page-link" @click="getPosts(currentPage - 1)" href="#">Previous</a>
+                      <a class="page-link" @click.prevent="getPosts(currentPage - 1)" href="#">Previous</a>
                     </li>
                      <!--number page-->
                     <li  v-for="pageNumber in lastPage" :key="pageNumber" class="page-item" :class="{'active' : pageNumber == currentPage}">
-                      <a @click="getPosts(pageNumber)" class="page-link" href="#">{{pageNumber}}</a>
+                      <a @click.prevent="getPosts(pageNumber)" class="page-link" href="#">{{pageNumber}}</a>
                     </li>
                     <!--next button-->
                     <li class="page-item" :class="{'disabled' : currentPage == lastPage }">
-                      <a class="page-link" @click="getPosts(currentPage + 1)" href="#">Next</a>
+                      <a class="page-link" @click.prevent="getPosts(currentPage + 1)" href="#">Next</a>
                     </li>
                 </ul>
             </nav>
