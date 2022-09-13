@@ -27,7 +27,7 @@ class PostController extends Controller
             'posts'=>$posts
         ];
 
-        return view(' admin.posts.index', $data);
+        return view('admin.posts.index', $data);
     }
 
     /**
