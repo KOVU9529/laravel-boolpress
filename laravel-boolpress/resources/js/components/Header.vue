@@ -1,19 +1,25 @@
 <template>
     <div class="container">
         <header>
-           <h2>Header</h2>
+           <h2>Seleziona la pagina</h2>
            <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
                     <div class="collapse navbar-collapse" id="navbarNavDropdown">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                               <router-link to="/" class="nav-link">Home</router-link>
+                                <router-link to="/" class="nav-link">
+                                    <h3 class="btn btn-warning">Home</h3>
+                                </router-link>
                             </li>
                             <li class="nav-item">
-                               <router-link to="/about" class="nav-link">About</router-link>
+                                <router-link to="/about" class="nav-link">
+                                    <h3 class="btn btn-danger">About</h3>
+                                </router-link>
                             </li>
                             <li class="nav-item">
-                               <router-link to="/blog" class="nav-link">Blog</router-link>
+                                <router-link to="/blog" class="nav-link">
+                                    <h3 class="btn btn-primary">Blog</h3>
+                                </router-link>
                             </li>
                         </ul>
                     </div>

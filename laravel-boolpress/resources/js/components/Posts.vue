@@ -5,15 +5,9 @@
                 Lista post
             </h2>
             <div class="row row-cols-3">
-            <div v-for="post in posts" :key="post.id" class="col">
-                <div class="card mt-3" >
-                    <!--<img src="..." class="card-img-top" alt="...">-->
-                    <div class="card-body">
-                      <h5 class="card-title">{{post.title}}</h5>
-                      <p class="card-text">{{truncateText(post.content)}} </p>
-                      <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
-                    </div>
-                </div>
+            <div v-for="singlepost in posts" :key="singlepost.id" class="col">
+                <!--post=props singlepost=variabile-->
+                <PostDetails :post="singlepost"/>
             </div>
             </div>
             <nav aria-label="Page navigation example">
@@ -37,8 +31,12 @@
 </template>
 
 <script>
+import PostDetails from './PostDetails.vue';
 export default {
     name:'Posts', 
+    components:{
+        PostDetails
+    },
     data(){
         return{
             posts:[],
@@ -48,13 +46,6 @@ export default {
         };
     },
     methods:{
-        //funzione per regolare la lunghezza da visualixzzare
-        truncateText(text){
-            if(text.length >75){
-                return text.slice(0,75) + '...';
-            }
-            return text;
-        },
         //per passare da una pagina all'altra
         //passo 'pageNumber' come argomento
         //tramite il metodo params aggiungo '?page=NUMERO DELLA PAGINA'
