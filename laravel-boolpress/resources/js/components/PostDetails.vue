@@ -4,6 +4,7 @@
              <!--<img src="..." class="card-img-top" alt="...">-->
             <div class="card-body">
                <h5 class="card-title"><h5 class="btn btn-success">{{post.title}}</h5></h5>
+               <img class="w-50" v-if="post.cover" :src="post.cover" :alt="post.title">
                <p class="card-text">{{truncateText(post.content)}} </p>
                <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
             </div>

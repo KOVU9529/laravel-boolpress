@@ -1,7 +1,9 @@
 @extends('layouts.dashboard')
 @section('content')
 <h2>{{$post->title}}</h2>
-
+@if ( $post->cover)
+   <img class="w-50" src="{{asset('storage/' . $post->cover)}}" alt="{{$post->title}}">    
+@endif
 <h3><strong>Creato il: {{$post->created_at->format('l j F Y')}}</strong></h3>
 <h3><strong>Aggiornato il: {{$post->updated_at ->format('l j m y')}}</strong></h3>
 <h4><strong>Categoria: {{ ( $post->category) ? $post->category->name : 'Nessuna' }}</strong></h4>

@@ -2077,8 +2077,15 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get('http://127.0.0.1:8000/api/posts/' + this.$route.params.slug).then(function (response) {
-      _this.post = response.data.results;
-      console.log(_this.post);
+      if (response.data.results) {
+        //il post c'è
+        _this.post = response.data.results;
+      } else {
+        //il post non c'è
+        _this.$router.push({
+          name: 'notfound'
+        });
+      }
     });
   }
 });
@@ -2194,7 +2201,13 @@ var render = function render() {
     staticClass: "card-title"
   }, [_c("h5", {
     staticClass: "btn btn-success"
-  }, [_vm._v(_vm._s(_vm.post.title))])]), _vm._v(" "), _c("p", {
+  }, [_vm._v(_vm._s(_vm.post.title))])]), _vm._v(" "), _vm.post.cover ? _c("img", {
+    staticClass: "w-50",
+    attrs: {
+      src: _vm.post.cover,
+      alt: _vm.post.title
+    }
+  }) : _vm._e(), _vm._v(" "), _c("p", {
     staticClass: "card-text"
   }, [_vm._v(_vm._s(_vm.truncateText(_vm.post.content)) + " ")])]), _vm._v(" "), _c("router-link", {
     staticClass: "btn btn-info m-1",
@@ -2447,7 +2460,13 @@ var render = function render() {
     staticClass: "container"
   }, [_vm.post ? _c("div", [_c("h2", [_vm._v("Titolo: "), _c("h2", {
     staticClass: "btn btn-success"
-  }, [_vm._v(_vm._s(_vm.post.title))])]), _vm._v(" "), _c("p", {
+  }, [_vm._v(_vm._s(_vm.post.title))])]), _vm._v(" "), _vm.post.cover ? _c("img", {
+    staticClass: "w-50",
+    attrs: {
+      src: _vm.post.cover,
+      alt: _vm.post.title
+    }
+  }) : _vm._e(), _vm._v(" "), _c("p", {
     staticClass: "btn btn-light"
   }, [_vm._v("Contenuto: " + _vm._s(_vm.post.content))]), _vm._v(" "), _c("div", [_vm.post.category ? _c("h3", [_vm._v(" Categoria: "), _c("h5", {
     staticClass: "btn btn-warning"

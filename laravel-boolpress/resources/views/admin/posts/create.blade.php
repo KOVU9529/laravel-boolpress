@@ -12,8 +12,8 @@
   </ul>
 </div>
 @endif
-
-<form action="{{ route('admin.posts.store')}}" method="post">
+<!--enctype="multipart/form-data" per poter inviare i file-->
+<form action="{{ route('admin.posts.store')}}" method="post" enctype="multipart/form-data">
     @csrf
     <div class="form-group">
         <label for="title">Titolo post</label>
@@ -48,11 +48,13 @@
         </label>
         </div>
         @endforeach
-       
-      
       <div class="form-group mt-3">
         <label for="content">Contenuto del post</label>
         <textarea class="form-control" id="content" name="content" rows="10" >{{old('content')}}</textarea>
+      </div>
+      <div class="form-group mt-3">
+        <label for="image" class="form-label">Immagine</label>
+        <input  class="form-control" type="file" id="image" name="image">
       </div>
       <input type="submit" value="Crea post">
   </form>

@@ -6,11 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Tag;
-
 use App\Category;
 use Illuminate\Support\ Str;
 //aggiunta Carbon
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -58,6 +58,13 @@ class PostController extends Controller
        $request->validate($this->getValidation());
 
        $form_data = $request->all();
+       if(isset($form_data['image'])){
+           //carico il file nella cartella 'post-covers'
+           //dentro Storage
+           //salva i dati nel database
+           $img_path = Storage::put('post-covers',$form_data['image']);
+           $form_data['cover']=$img_path ;
+       }
        
      
        $new_post = new Post();
@@ -70,8 +77,6 @@ class PostController extends Controller
        if(isset($form_data['tags'])){
         $new_post->tags()->sync($form_data['tags']);
        }
-       
-
        return redirect()->route('admin.posts.show',['post'=>$new_post->id]);
     }
 
@@ -132,7 +137,19 @@ class PostController extends Controller
         $request->validate($this->getValidation());
         $form_data = $request->all();
         $update_post = Post::findOrFail($id);
-        if($form_data['title'] !=   $update_post->title ){
+        if(isset($form_data['image'])){
+            //elimino l'immagine esistente
+            if( $update_post->cover){
+                Storage::delete($update_post->cover);
+                
+            }
+            //carico il file nella cartella 'post-covers'
+            //dentro Storage
+            //salva i dati nel database
+            $img_path = Storage::put('post-covers',$form_data['image']);
+            $form_data['cover']=$img_path ;
+        }
+        if($form_data['title'] != $update_post->title ){
             $form_data['slug'] = $this->getFreeSlugFromTitle( $form_data['title']);
         }else{
             $form_data['slug'] = $update_post->slug;
@@ -161,6 +178,10 @@ class PostController extends Controller
         $post_delete = Post::findOrFail ($id);
         $post_delete->tags()->sync([]);
         $post_delete-> delete();
+        //alla cancellazione del post cancello anche l'immagine
+        if($post_delete->cover){
+            Storage::delete($post_delete->cover);
+        }
         return redirect()-> route('admin.posts.index');
        
     }
@@ -188,8 +209,7 @@ class PostController extends Controller
             'content' => 'required|max:60000',
             'category_id' => 'nullable|exists:categories,id',
             'tags' => 'nullable|exists:tags,id',
-            
-
+            'image' => 'image|max:1024|nullable'
         ];
     }
 }
