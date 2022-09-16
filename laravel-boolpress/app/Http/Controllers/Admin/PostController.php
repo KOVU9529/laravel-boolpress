@@ -83,7 +83,7 @@ class PostController extends Controller
         $new_post->tags()->sync($form_data['tags']);
        }
        //invio email per avvisare l'utente della creazione di un nuovo post
-       Mail::to('bapgiordano@gmail.com')->send(new NewPostAdminEmail());
+       Mail::to('bapgiordano@gmail.com')->send(new NewPostAdminEmail($new_post));
        return redirect()->route('admin.posts.show',['post'=>$new_post->id]);
     }
 

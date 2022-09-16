@@ -11,14 +11,20 @@ class NewPostAdminEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    //creo una nuova proprietà
+    //classe con attributo new_post
+    private $new_post;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    
+    public function __construct( $_new_post)
     {
         //
+        $this->new_post=$_new_post;
     }
 
     /**
@@ -28,6 +34,9 @@ class NewPostAdminEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.new-post-admin-email');
+        $data=[
+            'new_post' => $this->new_post
+        ];
+        return $this->view('emails.new-post-admin-email',$data);
     }
 }
