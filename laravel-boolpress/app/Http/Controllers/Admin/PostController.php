@@ -11,6 +11,11 @@ use Illuminate\Support\ Str;
 //aggiunta Carbon
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+//la class mail è la facades di laravel
+use Illuminate\Support\Facades\Mail;
+//namespace + nome della classe 
+use App\Mail\NewPostAdminEmail;
+
 
 class PostController extends Controller
 {
@@ -77,6 +82,8 @@ class PostController extends Controller
        if(isset($form_data['tags'])){
         $new_post->tags()->sync($form_data['tags']);
        }
+       //invio email per avvisare l'utente della creazione di un nuovo post
+       Mail::to('bapgiordano@gmail.com')->send(new NewPostAdminEmail());
        return redirect()->route('admin.posts.show',['post'=>$new_post->id]);
     }
 
