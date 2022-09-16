@@ -37,7 +37,7 @@ class LeadController extends Controller
         $new_lead ->fill($data);
         $new_lead ->save();
 
-        //emailRingraziamento
+        //email ringraziamento segnalazione
         Mail::to($data['email'])->send(new ThankYouContactEmail());
 
         //risposta
