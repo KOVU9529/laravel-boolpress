@@ -16,9 +16,9 @@
 <form action="{{ route('admin.posts.store')}}" method="post" enctype="multipart/form-data">
     @csrf
     <div class="form-group">
-        <label for="title">Titolo post</label>
-        <input type="text" class="form-control" id="title" name="title" value="{{old('title')}}">
-      </div>
+      <label for="title">Titolo post</label>
+      <input type="text" class="form-control" id="title" name="title" value="{{old('title')}}">
+    </div>
       <div class="form-group">
         <label for="category_id">Categoria</label>
         <select class="form-select" name="category_id" id="category_id">

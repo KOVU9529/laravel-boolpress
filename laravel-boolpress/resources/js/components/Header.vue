@@ -21,6 +21,11 @@
                                     <h3 class="btn btn-primary">Blog</h3>
                                 </router-link>
                             </li>
+                            <li class="nav-item">
+                                <router-link to="/contact" class="nav-link">
+                                    <h3 class="btn btn-success">Contattaci</h3>
+                                </router-link>
+                            </li>
                         </ul>
                     </div>
                 </div>
